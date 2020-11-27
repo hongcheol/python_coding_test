@@ -1,33 +1,40 @@
-import math
-N = int(input())
-array = []
-total = 0
-count = [0]*8010
-for i in range(N):
-    array.append(int(input()))
-    total += array[i]
+import sys
+numbers = list()
+counter = [0]*8001
+sorted_numbers = list()
+n = int(input())
+hap = 0
+for _ in range(n):
+    number = int(sys.stdin.readline())
+    numbers.append(number)
+    counter[number+4000] += 1
+    hap += number
+print(round(hap/n))
 
-array.sort()
-print(round(total/N))
-print(array[N//2])
-temp = 0
-for i in range(N):
-    count[array[i]+4000] += 1
+for i in range(8001):
+    if counter[i] != 0:
+        for _ in range(counter[i]):
+            sorted_numbers.append(i-4000)
 
-maximum = max(count)
-idx = 0
+most = max(counter)
+find = 0
 ans = 0
-while True:
-    if count[idx] == maximum:
-        if temp == 1:
-            ans = idx - 4000
-            break
-        else:
-            ans = idx - 4000
-            temp += 1
-    if idx == array[-1] + 4000:
-        break
-    idx += 1
+i = 0
+if n == 1:
+    ans = sorted_numbers[0]
+else:    
+    while i < n:
+        if most == counter[sorted_numbers[i]+4000]:
+            ans = sorted_numbers[i]
+            if find == 1:
+                break
+            else:
+                find += 1
+        i += counter[sorted_numbers[i]+4000]
 
+print(sorted_numbers[n//2])
 print(ans)
-print(array[-1]-array[0])
+print(sorted_numbers[-1]-sorted_numbers[0])
+        
+
+

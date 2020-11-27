@@ -1,29 +1,19 @@
-mini,maxi = map(int,input().split())
-
-maxi_sqrt = int(maxi**0.5)
-
-find = [False]*1000000
-div_num = [0]
-pow_array = []
+mini, maxi = map(int, input().split())
+a = [False,False] + [True]*(maxi-1)
+prime = []
 count = 0
-i = 2
-while i*i <= maxi:
-    pow_array.append(i**2)
-    find[i**2] = True
-    count += 1
-    i += 1
-
-for number in pow_array:
-    j = 2
-    while number*j < maxi:
-        find[number*j] = True
-        j+=1
-pow_yes = 0
 for i in range(mini,maxi+1):
-    if find[i] == True:
-        pow_yes += 1
+    if a[i]:
+        prime.append(i)
+        for j in range(2*i,maxi+1,i):
+            a[j] = False
+print(prime)
+high = 0
+low = 0
+total = 0
+for data in prime:
+    high = maxi//(data**2)
+    low = mini//(data**2)
+    total += high-low
 
-
-pow_no = maxi-mini+1-pow_yes
-print(pow_no)
-        
+print(maxi-mini+1-total)
